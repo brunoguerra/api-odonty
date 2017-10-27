@@ -42,7 +42,10 @@ class PatientsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_patient
-      @patient = Patient.joins(:person).includes(:person).find(params[:id])
+      @patient = Patient
+                  .joins(:additional,person: [:address])
+                  .includes(:additional,person: [:address])
+                  .find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
