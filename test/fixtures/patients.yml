@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  observation: MyText
+  responsable: MyString
+  responsable_cpf: MyString
+
+two:
+  observation: MyText
+  responsable: MyString
+  responsable_cpf: MyString
