@@ -1,0 +1,7 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: test@test.com
+  medical_record_number: MyString
+  reason_id: 1
+  patient_id: 1

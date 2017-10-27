@@ -27,10 +27,11 @@ ActiveRecord::Schema.define(version: 20171027170036) do
     t.string "adress_number"
     t.string "complement"
     t.string "neighborhood"
-    t.integer "addressable_id"
     t.string "addressable_type"
+    t.integer "addressable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
   end
 
   create_table "patients", primary_key: "person_id", force: :cascade do |t|
@@ -48,11 +49,8 @@ ActiveRecord::Schema.define(version: 20171027170036) do
     t.string "rg"
     t.integer "gender"
     t.integer "phone"
-    t.string "addressable_type"
-    t.integer "addressable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["addressable_type", "addressable_id"], name: "index_people_on_addressable_type_and_addressable_id"
   end
 
 end

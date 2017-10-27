@@ -3,24 +3,23 @@ class PatientsController < ApplicationController
 
   # GET /patients
   def index
-    @patients = Patient.all
-
-    render json: @patients
+    @patients = Patient.joins(:person).includes(:person).all
+    render json: @patients, :each_serializer => PatientSimpleSerializer
   end
 
   # GET /patients/1
   def show
-    render json: @patient
+    render json: @patient, :serializer => PatientCompleteSerializer
   end
 
   # POST /patients
   def create
     @patient = Patient.new(patient_params)
-    # Do I really have to do this for polymorphic associations ?
+    # Do I really need to do this for polymorphic associations ?
     @patient.person.address.addressable = @patient.person
 
     if @patient.save
-      render json: @patient, status: :created, location: @patient
+      render json: @patient, status: :created, location: @patient, :serializer => PatientCompleteSerializer
     else
       render json: @patient.errors, status: :unprocessable_entity
     end
@@ -29,7 +28,7 @@ class PatientsController < ApplicationController
   # PATCH/PUT /patients/1
   def update
     if @patient.update(patient_params)
-      render json: @patient
+      render json: @patient, :serializer => PatientCompleteSerializer
     else
       render json: @patient.errors, status: :unprocessable_entity
     end
@@ -43,7 +42,7 @@ class PatientsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_patient
-      @patient = Patient.find(params[:id])
+      @patient = Patient.joins(:person).includes(:person).find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
