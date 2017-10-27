@@ -55,7 +55,8 @@ class PatientsController < ApplicationController
           address_attributes: [
             :id,:postal_code,:street,:adress_number,:complement,:neighborhood
           ]
-        ]
+        ],
+        additional_attributes: [:id, :email,:medical_record_number,:reason_id]
       )
     end
 end

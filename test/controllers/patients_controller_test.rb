@@ -30,6 +30,11 @@ class PatientsControllerTest < ActionDispatch::IntegrationTest
               postal_code: @patient.person.address.postal_code,
               neighborhood: @patient.person.address.neighborhood
             }
+          },
+          additional_attributes: {
+            email: @patient.additional.email,
+            medical_record_number:@patient.additional.medical_record_number ,
+            reason_id: @patient.additional.reason_id
           }
         } 
       }, as: :json
@@ -65,6 +70,12 @@ class PatientsControllerTest < ActionDispatch::IntegrationTest
             neighborhood: @patient.person.address.neighborhood,
             
           }
+        },
+        additional_attributes: {
+          id: @patient.additional.id,
+          email: @patient.additional.email,
+          medical_record_number: @patient.additional.medical_record_number ,
+          reason_id: @patient.additional.reason_id
         }
       } 
     }, as: :json
