@@ -4,8 +4,4 @@ one:
   observation: MyText
   responsable: MyString
   responsable_cpf: MyString
-
-two:
-  observation: MyText
-  responsable: MyString
-  responsable_cpf: MyString
+  person_id: 1

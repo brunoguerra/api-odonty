@@ -2,7 +2,8 @@ require 'test_helper'
 
 class PatientsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @patient = patients(:one)
+    @patient = Patient.first
+    
   end
 
   test "should get index" do
@@ -12,7 +13,26 @@ class PatientsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create patient" do
     assert_difference('Patient.count') do
-      post patients_url, params: { patient: { observation: @patient.observation, responsable: @patient.responsable, responsable_cpf: @patient.responsable_cpf } }, as: :json
+      post patients_url, params: { 
+        patient: { 
+          observation: @patient.observation, 
+          responsable: @patient.responsable, 
+          responsable_cpf: @patient.responsable_cpf,
+          person_attributes: {
+            name: @patient.person.name,
+            birthdate: @patient.person.birthdate,
+            cpf: @patient.person.cpf,
+            rg: @patient.person.rg,
+            gender: @patient.person.gender,
+            phone: @patient.person.phone,
+            address_attributes: {
+              street: @patient.person.address.street ,
+              postal_code: @patient.person.address.postal_code,
+              neighborhood: @patient.person.address.neighborhood
+            }
+          }
+        } 
+      }, as: :json
     end
 
     assert_response 201
@@ -24,7 +44,30 @@ class PatientsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update patient" do
-    patch patient_url(@patient), params: { patient: { observation: @patient.observation, responsable: @patient.responsable, responsable_cpf: @patient.responsable_cpf } }, as: :json
+    patch patient_url(@patient), 
+    params: { 
+      patient: { 
+        observation: @patient.observation, 
+        responsable: @patient.responsable, 
+        responsable_cpf: @patient.responsable_cpf,
+        person_attributes: {
+          id: @patient.person.id,
+          name: @patient.person.name,
+          birthdate: @patient.person.birthdate,
+          cpf: @patient.person.cpf,
+          rg: @patient.person.rg,
+          gender: @patient.person.gender,
+          phone: @patient.person.phone,
+          address_attributes: {
+            id: @patient.person.address.id,
+            street: @patient.person.address.street ,
+            postal_code: @patient.person.address.postal_code,
+            neighborhood: @patient.person.address.neighborhood,
+            
+          }
+        }
+      } 
+    }, as: :json
     assert_response 200
   end
 

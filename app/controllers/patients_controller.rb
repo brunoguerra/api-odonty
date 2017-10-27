@@ -16,6 +16,8 @@ class PatientsController < ApplicationController
   # POST /patients
   def create
     @patient = Patient.new(patient_params)
+    # Do I really have to do this for polymorphic associations ?
+    @patient.person.address.addressable = @patient.person
 
     if @patient.save
       render json: @patient, status: :created, location: @patient
@@ -46,6 +48,14 @@ class PatientsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def patient_params
-      params.require(:patient).permit(:observation, :responsable, :responsable_cpf)
+      params.require(:patient).permit(
+        :observation, :responsable, :responsable_cpf,
+        person_attributes: [
+          :id, :name,:birthdate,:cpf,:rg,:gender,:phone,
+          address_attributes: [
+            :id,:postal_code,:street,:adress_number,:complement,:neighborhood
+          ]
+        ]
+      )
     end
 end

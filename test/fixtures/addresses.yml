@@ -7,13 +7,4 @@ one:
   complement: MyString
   neighborhood: MyString
   addressable_id: 1
-  addressble_type: MyString
-
-two:
-  postal_code: MyString
-  street: MyString
-  adress_number: MyString
-  complement: MyString
-  neighborhood: MyString
-  addressable_id: 1
-  addressble_type: MyString
+  addressable_type: Person
