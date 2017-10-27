@@ -2,7 +2,7 @@ require "cpf_cnpj"
 
 class Person < ApplicationRecord
   enum gender: [:male, :female]
-  has_one :address, validate: true, :as => :addressable, :required => true
+  has_one :address, validate: true, :as => :addressable, :required => true, :dependent => :destroy
 
   validates :name, :birthdate, :cpf, :rg, :gender, :presence => true
 
