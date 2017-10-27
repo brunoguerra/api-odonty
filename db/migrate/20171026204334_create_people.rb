@@ -8,6 +8,8 @@ class CreatePeople < ActiveRecord::Migration[5.1]
       t.integer :gender
       t.integer :phone
 
+      t.references :addressable, polymorphic: true, index: true
+
       t.timestamps
     end
   end

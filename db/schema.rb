@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171026205846) do
+ActiveRecord::Schema.define(version: 20171027102306) do
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "postal_code"
+    t.string "street"
+    t.string "adress_number"
+    t.string "complement"
+    t.string "neighborhood"
+    t.integer "addressable_id"
+    t.string "addressable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "patients", primary_key: "person_id", force: :cascade do |t|
     t.text "observation"
@@ -27,8 +39,11 @@ ActiveRecord::Schema.define(version: 20171026205846) do
     t.string "rg"
     t.integer "gender"
     t.integer "phone"
+    t.string "addressable_type"
+    t.integer "addressable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["addressable_type", "addressable_id"], name: "index_people_on_addressable_type_and_addressable_id"
   end
 
 end
