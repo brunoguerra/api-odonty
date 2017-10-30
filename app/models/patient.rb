@@ -8,5 +8,6 @@ class Patient < ApplicationRecord
   accepts_nested_attributes_for :additional
   
   validates_associated :person
+  validates_with CPFValidator , :attribute => :responsable_cpf
   
 end
