@@ -4,8 +4,7 @@ class Person < ApplicationRecord
           validate: true, 
           :as => :addressable, 
           :required => true, 
-          :dependent => :destroy, 
-          :inverse_of => :addressable
+          :dependent => :destroy
 
   validates :name, :birthdate, :cpf, :rg, :gender, :presence => true
   validates_with CPFValidator
