@@ -2,10 +2,14 @@ require 'rails_helper'
 
 RSpec.describe AnamnesisModelsController, type: :controller do
 
-  # This should return the minimal set of attributes required to create a valid
-  # AnamnesisModel. As you add validations to AnamnesisModel, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) { FactoryBot.attributes_for :anamnesis_model }
+  let(:valid_anamnesis_model_questions_attributes) { FactoryBot.attributes_for_list(:anamnesis_model_question, 1)  }
+  let(:valid_attributes) { 
+    FactoryBot.build(:anamnesis_model) { |am|
+      am.anamnesis_model_questions = FactoryBot.build_list(:anamnesis_model_question, 1, :anamnesis_model => am)
+    }.attributes
+  }
+  
+
 
   let(:invalid_attributes) { { description: ''} }
 
@@ -34,13 +38,16 @@ RSpec.describe AnamnesisModelsController, type: :controller do
     context "with valid params" do
       it "creates a new AnamnesisModel" do
         expect {
-          post :create, params: {anamnesis_model: valid_attributes}, session: valid_session
+          post :create, params: {
+            anamnesis_model: valid_attributes
+            }, session: valid_session
         }.to change(AnamnesisModel, :count).by(1)
       end
 
       it "renders a JSON response with the new anamnesis_model" do
 
         post :create, params: {anamnesis_model: valid_attributes}, session: valid_session
+        expect(valid_anamnesis_model_questions_attributes).to eq("teste")
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
         expect(response.location).to eq(anamnesis_model_url(AnamnesisModel.last))

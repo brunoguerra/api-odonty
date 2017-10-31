@@ -1,5 +1,7 @@
 class AnamnesisModel < ApplicationRecord
-  has_many :anamnesis_questions
-  has_many :questions, :through => :anamnesis_questions
-  validates_presence_of :description
+  has_many :anamnesis_model_questions
+  has_many :questions, :through => :anamnesis_model_questions
+
+  validates_presence_of :description, :anamnesis_model_questions
+  
 end
