@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :questions
   resources :anamnesis_models
   resources :procedures
   resources :procedure_categories
