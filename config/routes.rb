@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :anamnesis_models
   resources :procedures
   resources :procedure_categories
   resources :patients
