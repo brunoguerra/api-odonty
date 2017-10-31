@@ -2,14 +2,17 @@ require 'rails_helper'
 
 RSpec.describe AnamnesisModelsController, type: :controller do
 
-  let(:valid_anamnesis_model_questions_attributes) { FactoryBot.attributes_for_list(:anamnesis_model_question, 1)  }
-  let(:valid_attributes) { 
-    FactoryBot.build(:anamnesis_model) { |am|
-      am.anamnesis_model_questions = FactoryBot.build_list(:anamnesis_model_question, 1, :anamnesis_model => am)
-    }.attributes
+  let(:valid_object) { FactoryBot.build(:anamnesis_model)}
+  let(:valid_questions_attributes) { 
+    Array.new(valid_object.anamnesis_model_questions.size)  do |i| 
+      valid_object.anamnesis_model_questions[i].attributes
+    end  
   }
-  
-
+  let(:valid_attributes) { 
+    valid_object.attributes.merge({
+      "anamnesis_model_questions_attributes" => valid_questions_attributes 
+    })
+  }
 
   let(:invalid_attributes) { { description: ''} }
 
@@ -47,7 +50,6 @@ RSpec.describe AnamnesisModelsController, type: :controller do
       it "renders a JSON response with the new anamnesis_model" do
 
         post :create, params: {anamnesis_model: valid_attributes}, session: valid_session
-        expect(valid_anamnesis_model_questions_attributes).to eq("teste")
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
         expect(response.location).to eq(anamnesis_model_url(AnamnesisModel.last))
