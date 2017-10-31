@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171030193341) do
+ActiveRecord::Schema.define(version: 20171031134948) do
 
   create_table "additionals", force: :cascade do |t|
     t.string "email"
@@ -32,6 +32,12 @@ ActiveRecord::Schema.define(version: 20171030193341) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
+  end
+
+  create_table "anamnesis_models", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "patients", primary_key: "person_id", force: :cascade do |t|
