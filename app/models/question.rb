@@ -8,6 +8,7 @@ class Question < ApplicationRecord
 
   validates_presence_of :description, :question_type
 
+  
  # create validation, 
  # a question type cant be changed if the question has already been answered 
 end
