@@ -28,13 +28,8 @@ RSpec.describe AnamnesesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Anamnesis. As you add validations to Anamnesis, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) { FactoryBot.build(:anamnesis).attributes}
+  let(:invalid_attributes) { { anamnesis_model_id: ""} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -86,15 +81,13 @@ RSpec.describe AnamnesesController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) { { observation: "teste"} }
 
       it "updates the requested anamnesis" do
         anamnesis = Anamnesis.create! valid_attributes
         put :update, params: {id: anamnesis.to_param, anamnesis: new_attributes}, session: valid_session
         anamnesis.reload
-        skip("Add assertions for updated state")
+        expect(anamnesis.observation).to eq(new_attributes[:observation])
       end
 
       it "renders a JSON response with the anamnesis" do

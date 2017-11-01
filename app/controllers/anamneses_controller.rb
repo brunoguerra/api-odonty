@@ -1,5 +1,5 @@
 class AnamnesesController < ApplicationController
-  before_action :set_anamnese, only: [:show, :update, :destroy]
+  before_action :set_anamnesis, only: [:show, :update, :destroy]
 
   # GET /anamneses
   def index
@@ -10,42 +10,42 @@ class AnamnesesController < ApplicationController
 
   # GET /anamneses/1
   def show
-    render json: @anamnese
+    render json: @anamnesis
   end
 
   # POST /anamneses
   def create
-    @anamnese = Anamnesis.new(anamnese_params)
+    @anamnesis = Anamnesis.new(anamnesis_params)
 
-    if @anamnese.save
-      render json: @anamnese, status: :created, location: @anamnese
+    if @anamnesis.save
+      render json: @anamnesis, status: :created, location: @anamnesis
     else
-      render json: @anamnese.errors, status: :unprocessable_entity
+      render json: @anamnesis.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /anamneses/1
   def update
-    if @anamnese.update(anamnese_params)
-      render json: @anamnese
+    if @anamnesis.update(anamnesis_params)
+      render json: @anamnesis
     else
-      render json: @anamnese.errors, status: :unprocessable_entity
+      render json: @anamnesis.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /anamneses/1
   def destroy
-    @anamnese.destroy
+    @anamnesis.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_anamnese
-      @anamnese = Anamnesis.find(params[:id])
+    def set_anamnesis
+      @anamnesis = Anamnesis.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
-    def anamnese_params
-      params.require(:anamnese).permit(:anamnesis_model_id, :observation, :patient_id)
+    def anamnesis_params
+      params.require(:anamnesis).permit(:anamnesis_model_id, :observation, :patient_id)
     end
 end
