@@ -3,30 +3,25 @@ require "rails_helper"
 RSpec.describe AnamnesesController, type: :routing do
   describe "routing" do
 
-    it "routes to #index" do
-      expect(:get => "/anamneses").to route_to("anamneses#index")
-    end
-
-
     it "routes to #show" do
-      expect(:get => "/anamneses/1").to route_to("anamneses#show", :id => "1")
+      expect(:get => "patients/1/anamneses").to route_to("anamneses#show", :patient_id => "1")
     end
 
 
     it "routes to #create" do
-      expect(:post => "/anamneses").to route_to("anamneses#create")
+      expect(:post => "patients/1/anamneses").to route_to("anamneses#create", :patient_id => "1")
     end
 
     it "routes to #update via PUT" do
-      expect(:put => "/anamneses/1").to route_to("anamneses#update", :id => "1")
+      expect(:put => "patients/1/anamneses").to route_to("anamneses#update", :patient_id => "1")
     end
 
     it "routes to #update via PATCH" do
-      expect(:patch => "/anamneses/1").to route_to("anamneses#update", :id => "1")
+      expect(:patch => "patients/1/anamneses").to route_to("anamneses#update", :patient_id => "1")
     end
 
     it "routes to #destroy" do
-      expect(:delete => "/anamneses/1").to route_to("anamneses#destroy", :id => "1")
+      expect(:delete => "patients/1/anamneses").to route_to("anamneses#destroy", :patient_id => "1")
     end
 
   end
