@@ -17,7 +17,7 @@ class Question < ApplicationRecord
   private
 
     def has_text_on_question_type?
-      !self.question_type.nil? and self.question_type.to_sym.in? [:yes_no_i_dont_know_and_text,:only_text] 
+      !self.question_type.nil? and self.question_type.to_sym.in? [:yes_no_i_dont_know_and_text] 
     end
  # create validation, 
  # a question type cant be changed if the question has already been answered 
