@@ -8,12 +8,12 @@ class AnamnesesController < ApplicationController
 
   # POST /anamneses
   def create
-    @patient.anamnesis = Anamnesis.new(anamnesis_params)
-
-    if @patient.anamnesis.save
-      render json: @patient.anamnesis, status: :created, location: @patient
+    anamnesis = Anamnesis.new(anamnesis_params)
+    anamnesis.patient = @patient
+    if anamnesis.save
+      render json: anamnesis, status: :created, location: [@patient,'anamnesis']
     else
-      render json: @patient.anamnesis.errors, status: :unprocessable_entity
+      render json: anamnesis.errors, status: :unprocessable_entity
     end
   end
 

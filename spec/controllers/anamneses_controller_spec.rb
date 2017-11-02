@@ -16,7 +16,7 @@ RSpec.describe AnamnesesController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      anamnesis = Anamnesis.find valid_object.id
+      anamnesis = Anamnesis.create! FactoryBot.build(:anamnesis).attributes
       get :show, params: {patient_id: anamnesis.patient.to_param}, session: valid_session
       expect(response).to be_success
     end
@@ -24,28 +24,28 @@ RSpec.describe AnamnesesController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
-      patient = FactoryBot.create :patient
-
+      
       it "creates a new Anamnesis" do
+        anamnesis = FactoryBot.build(:anamnesis)
         expect {
-          post :create, params: {patient_id: patient.to_param, anamnesis: valid_attributes}, session: valid_session
+          post :create, params: {patient_id: anamnesis.patient.to_param, anamnesis: anamnesis.attributes}, session: valid_session
         }.to change(Anamnesis, :count).by(1)
       end
 
       it "renders a JSON response with the new anamnesis" do
-
-        post :create, params: {patient_id: patient.to_param, anamnesis: valid_attributes}, session: valid_session
+        anamnesis = FactoryBot.build(:anamnesis)
+        post :create, params: {patient_id: anamnesis.patient.to_param, anamnesis: anamnesis.attributes}, session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(anamnesis_url(Anamnesis.last))
+        expect(response.location).to eq(patient_anamnesis_url(anamnesis.patient))
       end
     end
 
     context "with invalid params" do
-      patient = FactoryBot.create :patient
+      
       it "renders a JSON response with errors for the new anamnesis" do
-
-        post :create, params: {patient_id: patient.to_param,anamnesis: invalid_attributes}, session: valid_session
+        anamnesis = FactoryBot.build(:anamnesis)
+        post :create, params: {patient_id: anamnesis.patient.to_param,anamnesis: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -57,16 +57,13 @@ RSpec.describe AnamnesesController, type: :controller do
       let(:new_attributes) { { observation: "teste"} }
 
       it "updates the requested anamnesis" do
-        anamnesis = Anamnesis.create! valid_attributes
-        put :update, params: {patient_id: anamnesis.patient.to_param, anamnesis: new_attributes}, session: valid_session
-        anamnesis.reload
-        expect(anamnesis.observation).to eq(new_attributes[:observation])
+        put :update, params: {patient_id: valid_object.patient.to_param, anamnesis: new_attributes}, session: valid_session
+        valid_object.reload
+        expect(valid_object.observation).to eq(new_attributes[:observation])
       end
 
       it "renders a JSON response with the anamnesis" do
-        anamnesis = Anamnesis.create! valid_attributes
-
-        put :update, params: {patient_id: anamnesis.patient.to_param, anamnesis: valid_attributes}, session: valid_session
+        put :update, params: {patient_id: valid_object.patient.to_param, anamnesis: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')
       end
@@ -74,9 +71,7 @@ RSpec.describe AnamnesesController, type: :controller do
 
     context "with invalid params" do
       it "renders a JSON response with errors for the anamnesis" do
-        anamnesis = Anamnesis.create! valid_attributes
-
-        put :update, params: {patient_id: anamnesis.patient.to_param, anamnesis: invalid_attributes}, session: valid_session
+        put :update, params: {patient_id: valid_object.patient.to_param, anamnesis: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -85,9 +80,9 @@ RSpec.describe AnamnesesController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested anamnesis" do
-      anamnesis = Anamnesis.create! valid_attributes
+      anamnesis = Anamnesis.create! FactoryBot.build(:anamnesis).attributes
       expect {
-        delete :destroy, {patient_id: anamnesis.patient.to_param}, params: {patient_id: anamnesis.patient.to_param}, session: valid_session
+        delete :destroy, params: {patient_id: anamnesis.patient.to_param}, session: valid_session
       }.to change(Anamnesis, :count).by(-1)
     end
   end
