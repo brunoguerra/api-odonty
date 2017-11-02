@@ -39,6 +39,10 @@ class AnamnesesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def anamnesis_params
-      params.require(:anamnesis).permit(:anamnesis_model_id, :observation)
+      params.require(:anamnesis)
+        .permit(:anamnesis_model_id, 
+                :observation,
+                answers_attributes: [ :id, :question_id] 
+                )
     end
 end

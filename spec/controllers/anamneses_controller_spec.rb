@@ -5,8 +5,17 @@ RSpec.describe AnamnesesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Anamnesis. As you add validations to Anamnesis, be sure to
   # adjust the attributes here as well.
-  let(:valid_object) { FactoryBot.create(:anamnesis)}
-  let(:valid_attributes) { valid_object.attributes}
+  let(:valid_object) { FactoryBot.build(:anamnesis)}
+  let(:valid_answers_attributes) { 
+    Array.new(valid_object.answers.size)  do |i| 
+      valid_object.answers[i].attributes
+    end  
+  }
+  let(:valid_attributes) { 
+    valid_object.attributes.merge({
+      "answers_attributes" => valid_answers_attributes
+    })
+  }
   let(:invalid_attributes) { { anamnesis_model_id: ""} }
 
   # This should return the minimal set of values that should be in the session
@@ -26,26 +35,26 @@ RSpec.describe AnamnesesController, type: :controller do
     context "with valid params" do
       
       it "creates a new Anamnesis" do
-        anamnesis = FactoryBot.build(:anamnesis)
         expect {
-          post :create, params: {patient_id: anamnesis.patient.to_param, anamnesis: anamnesis.attributes}, session: valid_session
+          post :create, params: {patient_id: valid_object.patient.to_param, anamnesis: valid_attributes }, session: valid_session
         }.to change(Anamnesis, :count).by(1)
       end
 
       it "renders a JSON response with the new anamnesis" do
-        anamnesis = FactoryBot.build(:anamnesis)
-        post :create, params: {patient_id: anamnesis.patient.to_param, anamnesis: anamnesis.attributes}, session: valid_session
+        post :create, params: {patient_id: valid_object.patient.to_param, anamnesis: valid_attributes}, session: valid_session
+        
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(patient_anamnesis_url(anamnesis.patient))
+        expect(response.location).to eq(patient_anamnesis_url(valid_object.patient))
+        anamnesis = Patient.find(valid_object.patient.id).anamnesis
+        expect(anamnesis.answers.count).to eq(valid_attributes["answers_attributes"].count)
       end
     end
 
     context "with invalid params" do
       
       it "renders a JSON response with errors for the new anamnesis" do
-        anamnesis = FactoryBot.build(:anamnesis)
-        post :create, params: {patient_id: anamnesis.patient.to_param,anamnesis: invalid_attributes}, session: valid_session
+        post :create, params: {patient_id: valid_object.patient.to_param,anamnesis: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -57,13 +66,26 @@ RSpec.describe AnamnesesController, type: :controller do
       let(:new_attributes) { { observation: "teste"} }
 
       it "updates the requested anamnesis" do
-        put :update, params: {patient_id: valid_object.patient.to_param, anamnesis: new_attributes}, session: valid_session
-        valid_object.reload
-        expect(valid_object.observation).to eq(new_attributes[:observation])
+        anamnesis = Anamnesis.create! valid_attributes
+        new_valid_attributes = valid_attributes
+        new_valid_answers_attributes = Array.new(anamnesis.answers.size)  do |i| 
+          anamnesis.answers[i].attributes
+        end
+        new_valid_attributes["answers_attributes"] = []
+        new_valid_attributes.merge({
+          "answers_attributes" => new_valid_answers_attributes
+        })
+        new_valid_attributes[:observation] = new_attributes[:observation]
+        
+        put :update, params: {patient_id: anamnesis.patient.to_param, anamnesis: new_valid_attributes}, session: valid_session
+        anamnesis.reload
+        expect(anamnesis.observation).to eq(new_attributes[:observation])
+        expect(anamnesis.answers.count).to eq(new_valid_answers_attributes.count)
       end
 
       it "renders a JSON response with the anamnesis" do
-        put :update, params: {patient_id: valid_object.patient.to_param, anamnesis: valid_attributes}, session: valid_session
+        anamnesis = Anamnesis.create! valid_attributes
+        put :update, params: {patient_id: anamnesis.patient.to_param, anamnesis: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')
       end
@@ -71,7 +93,8 @@ RSpec.describe AnamnesesController, type: :controller do
 
     context "with invalid params" do
       it "renders a JSON response with errors for the anamnesis" do
-        put :update, params: {patient_id: valid_object.patient.to_param, anamnesis: invalid_attributes}, session: valid_session
+        anamnesis = Anamnesis.create! valid_attributes
+        put :update, params: {patient_id: anamnesis.patient.to_param, anamnesis: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
