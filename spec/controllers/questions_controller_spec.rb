@@ -38,9 +38,10 @@ RSpec.describe QuestionsController, type: :controller do
       it "renders a JSON response with the new question" do
 
         post :create, params: {question: valid_attributes}, session: valid_session
+        question = Question.last
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(question_url(Question.last))
+        expect(response.location).to eq(question_url(question))
       end
     end
 
