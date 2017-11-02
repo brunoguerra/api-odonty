@@ -1,3 +1,4 @@
+
 Question.create(
   description: 'Quando foi sua última vez que veio ao dentista? Como foi o atendimento?',
   is_an_alert: false,
@@ -535,3 +536,15 @@ Question.create(
   auxiliar_text: 'Qual(is)? Frequência de uso?',
   question_type: Question.question_types[:yes_no_i_dont_know_and_text]
 )
+
+anamnesis_model = AnamnesisModel.new(description: 'Anamnese Simplificada')
+Question.all.take(10).each do |question|
+  anamnesis_model.anamnesis_model_questions.build.question = question
+end
+anamnesis_model.save
+
+patient = Patient.new(observation: 'numquam', responsable: 'Dr. Bernhard Labadie', responsable_cpf: '01459895185')
+patient.person = Person.new(name: 'Duane Funk', birthdate: '1977-11-02', cpf: '01459895185', rg: '9540155567', gender: 1, phone: 843)
+patient.person.address = Address.new(postal_code: '56416-6780', street: 'Rusty Manors', adress_number: '508', complement: 'Apt. 121', neighborhood: 'Summer Village')
+patient.person.address.addressable = patient.person
+patient.save
