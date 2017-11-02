@@ -7,7 +7,7 @@ class Person < ApplicationRecord
           :dependent => :destroy
 
   validates :name, :birthdate, :cpf, :rg, :gender, :presence => true
-  validates_with CPFValidator
+  validates :cpf, :CPF => true
 
   accepts_nested_attributes_for :address
 
