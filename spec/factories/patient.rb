@@ -6,5 +6,6 @@ FactoryBot.define do
     responsable_cpf '01459895185'
     person
     additional
+    
   end
 end

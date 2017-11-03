@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe AnamnesesController, type: :routing do
+
   describe "routing" do
 
     it "routes to #show" do

@@ -1,4 +1,6 @@
 class Question < ApplicationRecord
+  after_create :do_association_with_anamnesis_models
+
   enum question_type: [
                         :yes_no, 
                         :yes_no_i_dont_know,
@@ -19,8 +21,11 @@ class Question < ApplicationRecord
     def has_text_on_question_type?
       !self.question_type.nil? and self.question_type.to_sym.in? [:yes_no_i_dont_know_and_text] 
     end
- # create validation, 
- # a question type cant be changed if the question has already been answered 
 
-
+    def do_association_with_anamnesis_models
+      AnamnesisModel.all.each do |anamnesis_model|
+        AnamnesisModelQuestion.create(anamnesis_model: anamnesis_model, question: self)
+      end
+    end
+ 
 end

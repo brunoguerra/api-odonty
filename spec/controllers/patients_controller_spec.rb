@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe PatientsController, type: :controller do
 
   # initialize test data 
+  
   let!(:patients) { create_list(:patient, 10) }
   let(:patient_id) { patients.first.id }
 
@@ -48,7 +49,8 @@ RSpec.describe PatientsController, type: :controller do
     
 
     context 'when the request is valid' do
-      before { post :create, params: { 
+      before { 
+        post :create, params: { 
           :patient => valid_attributes
             .merge({:person_attributes => person_valid_attributes.merge({:address_attributes => address_valid_attributes})}) 
             .merge({:additional_attributes => additional_valid_attributes })

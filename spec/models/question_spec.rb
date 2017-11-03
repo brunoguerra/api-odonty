@@ -26,5 +26,11 @@ RSpec.describe Question, type: :model do
     it { should_not validate_presence_of(:alert_text) }
   end
 
+  it "it should associate a recently created question to all existing anamnesis models" do
+    FactoryBot.build(:anamnesis_model).save
+    question = FactoryBot.build(:question)
+    question.save
+    expect(AnamnesisModel.count).to eq(AnamnesisModelQuestion.where(:question_id => question.id).count)
+  end
 
 end
