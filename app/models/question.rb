@@ -10,6 +10,11 @@ class Question < ApplicationRecord
 
   enum is_an_alert_when: [:yes,:no]
 
+  has_many :anamnesis_model_questions
+  has_many :anamnesis_models, :through => :anamnesis_model_questions
+  has_many :anamneses, :through => :anamnesis_models
+  has_many :answers, :through => :anamneses
+
   validates_presence_of :description, :question_type
   validates_presence_of :auxiliar_text,  if: :has_text_on_question_type? 
   validates_presence_of :is_an_alert_when,  if: :is_an_alert? 

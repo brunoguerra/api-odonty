@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171102141542) do
+ActiveRecord::Schema.define(version: 20171103202800) do
 
   create_table "additionals", force: :cascade do |t|
     t.string "email"
@@ -69,6 +69,12 @@ ActiveRecord::Schema.define(version: 20171102141542) do
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
+  create_table "chairs", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "patients", primary_key: "person_id", force: :cascade do |t|
     t.text "observation"
     t.string "responsable"
@@ -84,6 +90,12 @@ ActiveRecord::Schema.define(version: 20171102141542) do
     t.string "rg"
     t.integer "gender"
     t.integer "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -110,6 +122,15 @@ ActiveRecord::Schema.define(version: 20171102141542) do
     t.boolean "is_an_alert", default: false
     t.integer "is_an_alert_when"
     t.string "alert_text"
+  end
+
+  create_table "treatments", force: :cascade do |t|
+    t.integer "patient_id"
+    t.integer "plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["patient_id"], name: "index_treatments_on_patient_id"
+    t.index ["plan_id"], name: "index_treatments_on_plan_id"
   end
 
 end
