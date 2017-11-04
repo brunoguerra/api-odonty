@@ -66,7 +66,7 @@ RSpec.describe PatientsController, type: :controller do
       before { post :create, params: { 
         :patient => valid_attributes
           .merge({:person_attributes => person_valid_attributes.merge({:address_attributes => address_valid_attributes})}) 
-          .merge({:additional_attributes => {} })
+          .merge({:additional_attributes => { email: 'test'} })
         } 
       }
 
