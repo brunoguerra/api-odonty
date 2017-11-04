@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :procedure_categories
   resources :patients do
     resource :anamnesis do
-      get :questions
+      # get :questions
     end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -1,0 +1,33 @@
+require "rails_helper"
+
+RSpec.describe TreatmentsController, type: :routing do
+  describe "routing" do
+
+    it "routes to #index" do
+      expect(:get => "/treatments").to route_to("treatments#index")
+    end
+
+
+    it "routes to #show" do
+      expect(:get => "/treatments/1").to route_to("treatments#show", :id => "1")
+    end
+
+
+    it "routes to #create" do
+      expect(:post => "/treatments").to route_to("treatments#create")
+    end
+
+    it "routes to #update via PUT" do
+      expect(:put => "/treatments/1").to route_to("treatments#update", :id => "1")
+    end
+
+    it "routes to #update via PATCH" do
+      expect(:patch => "/treatments/1").to route_to("treatments#update", :id => "1")
+    end
+
+    it "routes to #destroy" do
+      expect(:delete => "/treatments/1").to route_to("treatments#destroy", :id => "1")
+    end
+
+  end
+end

@@ -10,7 +10,7 @@ class AnamnesisModelsController < ApplicationController
 
   # GET /anamnesis_models/1
   def show
-    render json: @anamnesis_model
+    render json: AnamnesisModelBuilder.new(@anamnesis_model).build(Question.all), :serializer => AnamnesisModelCompleteSerializer
   end
 
   # POST /anamnesis_models
@@ -41,7 +41,8 @@ class AnamnesisModelsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_anamnesis_model
-      @anamnesis_model = AnamnesisModel.find(params[:id])
+      @anamnesis_model = AnamnesisModel.find(params[:id]) if (params[:id].to_i > 0)
+      @anamnesis_model = AnamnesisModel.new unless (params[:id].to_i > 0)
     end
 
     # Only allow a trusted parameter "white list" through.

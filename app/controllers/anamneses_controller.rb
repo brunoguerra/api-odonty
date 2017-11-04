@@ -6,18 +6,6 @@ class AnamnesesController < ApplicationController
     render json: @patient.anamnesis
   end
 
-  def questions
-    @questions = AnamnesisModelQuestion.joins(:question).all
-    # = Question
-    #               .joins(anamnesis_model_questions:[:anamnesis_model])
-    #               .includes(anamnesis_model_questions: [:anamnesis_model])
-    #               .joins( " left join anamneses on anamneses.anamnesis_model_id = anamnesis_models.id "+
-    #                       " left join answers on answers.anamnesis_id = anamneses.id")
-    #               .select(:question,"answers.*")
-    #               .all
-    render json: @questions
-  end
-
   # POST /anamneses
   def create
     anamnesis = Anamnesis.new(anamnesis_params)

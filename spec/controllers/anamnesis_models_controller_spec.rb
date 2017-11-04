@@ -30,9 +30,16 @@ RSpec.describe AnamnesisModelsController, type: :controller do
   end
 
   describe "GET #show" do
-    it "returns a success response" do
+    it "returns a success response with an existing AnamnesisModel" do
+      FactoryBot.create_list(:question,10)
       anamnesis_model = AnamnesisModel.create! valid_attributes
       get :show, params: {id: anamnesis_model.to_param}, session: valid_session
+      expect(response).to be_success
+    end
+
+    it "returns a success response with a non existing AnamnesisModel" do
+      FactoryBot.create_list(:question,10)
+      get :show, params: {id: 0}, session: valid_session
       expect(response).to be_success
     end
   end
