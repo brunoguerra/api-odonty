@@ -3,7 +3,7 @@ class AnamnesesController < ApplicationController
 
   # GET /anamneses/1
   def show
-    render json: @patient.anamnesis
+    render json: AnamnesisBuilder.new(@patient.anamnesis).build, :serializer => AnamnesisCompleteSerializer
   end
 
   # POST /anamneses

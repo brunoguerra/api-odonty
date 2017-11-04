@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'question_type/index'
+
   resources :plans
   resources :treatments
   resources :chairs
