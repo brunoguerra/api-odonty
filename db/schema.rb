@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20171104132254) do
     t.integer "question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description"
     t.index ["anamnesis_id"], name: "index_answers_on_anamnesis_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
   end

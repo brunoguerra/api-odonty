@@ -41,6 +41,11 @@ RSpec.describe AnamnesesController, type: :controller do
       end
 
       it "renders a JSON response with the new anamnesis" do
+        
+        valid_attributes["answers_attributes"].each_with_index do |answer, index|
+          answer["description"] = index.to_s
+        end
+        
         post :create, params: {patient_id: valid_object.patient.to_param, anamnesis: valid_attributes}, session: valid_session
         
         expect(response).to have_http_status(:created)
@@ -48,6 +53,11 @@ RSpec.describe AnamnesesController, type: :controller do
         expect(response.location).to eq(patient_anamnesis_url(valid_object.patient))
         anamnesis = Patient.find(valid_object.patient.id).anamnesis
         expect(anamnesis.answers.count).to eq(valid_attributes["answers_attributes"].count)
+        anamnesis.answers.each_with_index do |answer, index|
+          expect(answer.description).to eq(
+            valid_attributes["answers_attributes"][index]["description"]
+          )
+        end
       end
     end
 
