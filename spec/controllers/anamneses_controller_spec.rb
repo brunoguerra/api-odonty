@@ -44,6 +44,7 @@ RSpec.describe AnamnesesController, type: :controller do
         
         valid_attributes["answers_attributes"].each_with_index do |answer, index|
           answer["description"] = index.to_s
+          answer["auxiliar_text"] = index.to_s
         end
         
         post :create, params: {patient_id: valid_object.patient.to_param, anamnesis: valid_attributes}, session: valid_session
@@ -54,9 +55,11 @@ RSpec.describe AnamnesesController, type: :controller do
         anamnesis = Patient.find(valid_object.patient.id).anamnesis
         expect(anamnesis.answers.count).to eq(valid_attributes["answers_attributes"].count)
         anamnesis.answers.each_with_index do |answer, index|
-          expect(answer.description).to eq(
-            valid_attributes["answers_attributes"][index]["description"]
-          )
+          (answer.attributes.keys - ["id","created_at","updated_at","anamnesis_id", "question_id"]).each do |attr|
+            expect(answer.attributes[attr]).to eq(valid_attributes["answers_attributes"][index][attr])  
+          end
+          expect(answer.description).to eq(valid_attributes["answers_attributes"][index]["description"])
+          expect(answer.auxiliar_text).to eq(valid_attributes["answers_attributes"][index]["auxiliar_text"])
         end
       end
     end

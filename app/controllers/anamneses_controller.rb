@@ -42,7 +42,12 @@ class AnamnesesController < ApplicationController
       params.require(:anamnesis)
         .permit(:anamnesis_model_id, 
                 :observation,
-                answers_attributes: [ :id, :question_id, :description] 
+                answers_attributes: [ 
+                  :id, 
+                  :question_id, 
+                  :description,
+                  :auxiliar_text
+                ] 
                 )
     end
 end
