@@ -1,4 +1,4 @@
-class PatientsController < ApplicationController
+class Api::V1::PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :update, :destroy]
 
   # GET /patients

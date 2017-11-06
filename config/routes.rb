@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
   
+  namespace :api do
+    namespace :v1 do
+      resources :patients do
+        resource :anamnesis do
+          # get :questions
+        end
+      end      
+    end
+  end
   get 'question_type/index'
 
   resources :plans

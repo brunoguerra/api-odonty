@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PatientsController, type: :controller do
+RSpec.describe Api::V1::PatientsController, type: :controller do
 
   # initialize test data 
   

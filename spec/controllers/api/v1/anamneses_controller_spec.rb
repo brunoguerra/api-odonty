@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AnamnesesController, type: :controller do
+RSpec.describe Api::V1::AnamnesesController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # Anamnesis. As you add validations to Anamnesis, be sure to

@@ -1,6 +1,7 @@
-class AnamnesesController < ApplicationController
+class Api::V1::AnamnesesController < ApplicationController
   before_action :set_patient, only: [:show,:create, :update, :destroy]
 
+  
   # GET /anamneses/1
   def show
     render json: AnamnesisBuilder.new(@patient.anamnesis).build, :serializer => AnamnesisCompleteSerializer
